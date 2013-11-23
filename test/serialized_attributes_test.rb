@@ -17,11 +17,16 @@ formatters.each do |fmt|
       @newbie  = SerializedRecordWithDefaults.new
       @record  = SerializedRecord.new
       @changed = SerializedRecord.new
+      @unchanged = SerializedRecord.new
       @record.raw_data  = self.class.raw_data
       @changed.raw_data = self.class.raw_data
+      @unchanged.raw_data = self.class.raw_data
       @changed.title    = 'def'
       @changed.age      = 6
       @changed[:active] = false
+      @unchanged.title = 'abc'
+      @unchanged.age = 5
+      @unchanged[:active] = true
     end
 
     test "schema lists attribute names" do
@@ -304,7 +309,11 @@ formatters.each do |fmt|
       assert @changed.changed?
       assert_equal @changed.changes, {'title' => ['abc', 'def'], 'age' => [5, 6], 'active' => [true, false]}
     end
-    
+
+    test "ignore equaivalent changes" do
+      assert !@unchanged.changed?
+    end
+
     test "changes a dup without modifying the original" do
       @duped = @record.dup
       assert !(@record.raw_data.equal? @duped.raw_data)
