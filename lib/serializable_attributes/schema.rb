@@ -26,11 +26,14 @@ module SerializableAttributes
 
     def decode(data, is_new_record = false)
       decoded = formatter.decode(data)
-      hash = ::Hash.new do |h, key|
+
+      default_proc = Proc.new do |h, key|
         if type = fields[key]
           h[key] = type ? type.default : nil
         end
       end
+
+      hash = SerializableAttributes::Attributes.new(&default_proc) 
 
       decoded.each do |k, v|
         next unless include?(k)
@@ -43,6 +46,7 @@ module SerializableAttributes
           hash[key] = type.default if type.default
         end
       end
+
       hash
     end
 

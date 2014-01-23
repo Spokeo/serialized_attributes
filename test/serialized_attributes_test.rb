@@ -86,6 +86,10 @@ formatters.each do |fmt|
       assert_equal @record.age,   @changed.age
     end
 
+    test "model can be marshalled" do
+      assert_equal @record.raw_data, Marshal.load(Marshal.dump(@record)).raw_data
+    end
+
     test "initialized model is not changed" do
       @record.data
       assert !@record.data_changed?

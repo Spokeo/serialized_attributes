@@ -34,6 +34,7 @@ module SerializableAttributes
   VERSION = "1.1.0"
 
   require File.expand_path('../serializable_attributes/types', __FILE__)
+  require File.expand_path('../serializable_attributes/attributes', __FILE__)
   require File.expand_path('../serializable_attributes/schema', __FILE__)
 
   if nil.respond_to?(:duplicable?)
