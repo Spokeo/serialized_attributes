@@ -31,7 +31,7 @@
 #   end
 #
 module SerializableAttributes
-  VERSION = "1.1.0"
+  VERSION = "1.1.1"
 
   require File.expand_path('../serializable_attributes/types', __FILE__)
   require File.expand_path('../serializable_attributes/attributes', __FILE__)
